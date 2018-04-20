@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import albumData from './../data/albums';
+import Song from './Song';
 
 class Album extends Component {
   constructor(props) {
     super(props);
 
     const album = albumData.find( album => {
-      console.log(album)
       return album.slug === this.props.match.params.slug
     })
 
@@ -15,13 +15,11 @@ class Album extends Component {
     };
   }
 
-
-
   render() {
     return (
       <section className="album">
         <section id="album-info">
-          <img id="album-cover-art" src={this.state.album.albumCover} />
+          <img id="album-cover-art" src={this.state.album.albumCover} alt="test" />
           <div className="album-details">
             <h1 id="album-title">{this.state.album.title}</h1>
             <h2 className="artist">{this.state.album.artist}</h2>
@@ -35,6 +33,11 @@ class Album extends Component {
             <col id="song-duration-column" />
           </colgroup>
           <tbody>
+            {
+              this.state.album.songs.map( (song, index) =>
+                <Song song={song} index={index} key={index} />
+              )
+            }
           </tbody>
         </table>
       </section>
