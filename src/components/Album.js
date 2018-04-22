@@ -8,11 +8,46 @@ class Album extends Component {
 
     const album = albumData.find( album => {
       return album.slug === this.props.match.params.slug
-    })
+    });
 
     this.state = {
-      album: album
+      album: album,
+      currentSong: album.songs[0],
+      isPlaying: false
     };
+
+    // not assigning audioElement from within the components state
+    // This is because changes to a components state and props triggers a re-render of the DOM
+    // We would like to access this element
+    this.audioElement = document.createElement('audio');
+    // default play begins at first track songs[0]
+    this.audioElement.src = album.songs[0].audioSrc;
+
+    this.play = () => {
+      this.audioElement.play();
+      this.setState({ isPlaying: true });
+    }
+
+    this.pause = () => {
+      this.audioElement.pause();
+      this.setState({ isPlaying: false });
+    }
+
+    this.setSong = (song) => {
+      this.audioElement.src = song.audioSrc;
+      this.setState({ currentSong: song });
+    }
+
+    this.handleSongClick = (song) => {
+      const isSameSong = this.state.currentSong === song;
+      // if currentSong is clicked, pause song. Otherwise contine playback
+      if (isSameSong && this.state.isPlaying) {
+        this.pause();
+      } else { // if song is NOT the same, set song before proceeding to play.
+        if (!isSameSong) { this.setSong(song); console.log(song);}
+        this.play();
+        }
+      }
   }
 
   render() {
@@ -35,7 +70,7 @@ class Album extends Component {
           <tbody>
             {
               this.state.album.songs.map( (song, index) =>
-                <Song song={song} index={index} key={index} />
+              <Song song={song} index={index} handleSongClick={ () => this.handleSongClick(song) } key={index} />
               )
             }
           </tbody>
