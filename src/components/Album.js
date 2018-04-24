@@ -13,7 +13,8 @@ class Album extends Component {
     this.state = {
       album: album,
       currentSong: album.songs[0],
-      isPlaying: false
+      isPlaying: false,
+      track: null
     };
 
     // not assigning audioElement from within the components state
@@ -23,9 +24,13 @@ class Album extends Component {
     // default play begins at first track songs[0]
     this.audioElement.src = album.songs[0].audioSrc;
 
-    this.play = () => {
+    this.play = (index) => {
       this.audioElement.play();
-      this.setState({ isPlaying: true });
+      this.setState({
+        isPlaying: true,
+        track: index
+      });
+
     }
 
     this.pause = () => {
@@ -38,14 +43,17 @@ class Album extends Component {
       this.setState({ currentSong: song });
     }
 
-    this.handleSongClick = (song) => {
+    this.handleSongClick = (song,index) => {
+
       const isSameSong = this.state.currentSong === song;
       // if currentSong is clicked, pause song. Otherwise contine playback
       if (isSameSong && this.state.isPlaying) {
         this.pause();
       } else { // if song is NOT the same, set song before proceeding to play.
-        if (!isSameSong) { this.setSong(song); console.log(song);}
-        this.play();
+        if (!isSameSong) {
+          this.setSong(song);
+        }
+        this.play(index);
         }
       }
   }
@@ -70,7 +78,13 @@ class Album extends Component {
           <tbody>
             {
               this.state.album.songs.map( (song, index) =>
-              <Song song={song} index={index} handleSongClick={ () => this.handleSongClick(song) } key={index} />
+              <Song
+                song={song}
+                isPlaying={this.state.isPlaying}
+                track={this.state.track}
+                index={index}
+                handleSongClick={ () => this.handleSongClick(song, index) }
+                key={index} />
               )
             }
           </tbody>
