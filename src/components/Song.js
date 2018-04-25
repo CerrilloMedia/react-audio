@@ -8,14 +8,11 @@ class Song extends Component {
 
   render() {
 
-    if (this.props.track !== this.props.index) {
-      // if props.index doesn't match props.track or props.track is null display track number
+    if (this.props.currentSong !== this.props.song) {
       this.status = <span className="song-number">{this.props.index+1}</span>
-    } else if (this.props.isPlaying && this.props.track === this.props.index ) {
-      // if song is playing and track matches index, display the pause button
-      this.status = <span className="ion-pause"></span>
     } else {
-      this.status = <span className="ion-play"></span>
+      
+      this.status = this.props.isPlaying ? <span className="ion-pause"></span> : <span className="ion-play"></span>
     }
 
     return(

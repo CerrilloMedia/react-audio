@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import albumData from './../data/albums';
 import Song from './Song';
+import PlayerBar from './PlayerBar';
 
 class Album extends Component {
   constructor(props) {
@@ -17,6 +18,10 @@ class Album extends Component {
       track: null
     };
 
+    const findSongIndex = (songs) => {
+      return songs.findIndex(song => song === this.state.currentSong);
+    }
+
     // not assigning audioElement from within the components state
     // This is because changes to a components state and props triggers a re-render of the DOM
     // We would like to access this element
@@ -24,11 +29,11 @@ class Album extends Component {
     // default play begins at first track songs[0]
     this.audioElement.src = album.songs[0].audioSrc;
 
-    this.play = (index) => {
+    this.play = (song) => {
       this.audioElement.play();
       this.setState({
         isPlaying: true,
-        track: index
+        track: findSongIndex(this.state.album.songs)
       });
 
     }
@@ -43,7 +48,7 @@ class Album extends Component {
       this.setState({ currentSong: song });
     }
 
-    this.handleSongClick = (song,index) => {
+    this.handleSongClick = (song) => {
 
       const isSameSong = this.state.currentSong === song;
       // if currentSong is clicked, pause song. Otherwise contine playback
@@ -53,9 +58,34 @@ class Album extends Component {
         if (!isSameSong) {
           this.setSong(song);
         }
-        this.play(index);
+        this.play(song);
         }
       }
+
+    this.handlePrevClick = () => {
+
+      const currentIndex = findSongIndex(this.state.album.songs);
+      const newIndex = Math.max(0, currentIndex - 1);
+      const newSong = this.state.album.songs[newIndex];
+
+      if (newSong !== this.state.currentSong) {
+        this.setSong(newSong);
+        this.play(newSong);
+      }
+    }
+
+    this.handleNextClick = () => {
+
+      const currentIndex = findSongIndex(this.state.album.songs);
+      const newIndex = Math.min(this.state.album.songs.length - 1, currentIndex + 1);
+      const newSong = this.state.album.songs[newIndex];
+
+      // if disable song restart if currentSong == newSong
+      if (newSong !== this.state.currentSong) {
+        this.setSong(newSong);
+        this.play(newSong);
+      }
+    }
   }
 
   render() {
@@ -80,15 +110,22 @@ class Album extends Component {
               this.state.album.songs.map( (song, index) =>
               <Song
                 song={song}
+                currentSong={this.state.currentSong}
                 isPlaying={this.state.isPlaying}
-                track={this.state.track}
                 index={index}
-                handleSongClick={ () => this.handleSongClick(song, index) }
+                handleSongClick={ () => this.handleSongClick(song) }
                 key={index} />
               )
             }
           </tbody>
         </table>
+        <PlayerBar
+          isPlaying={this.state.isPlaying}
+          currentSong={this.state.currentSong}
+          handleSongClick={ () => this.handleSongClick(this.state.currentSong)}
+          handlePrevClick={ () => this.handlePrevClick()}
+          handleNextClick={ () => this.handleNextClick()}
+        />
       </section>
     );
   }
