@@ -1,36 +1,217 @@
+html {
+  min-height: 100%;
+  background: linear-gradient(to top, #33ccff 0%, #1f2325 100%);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+}
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
   color: white;
 }
 
-.App-title {
-  font-size: 1.5em;
+/* Album Page  */
+.album {
+  padding-bottom: 7em;
+  padding-top: 1em;
 }
 
-.App-intro {
-  font-size: large;
+#album-info {
+  width: 40%;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0 1em;
 }
 
-.hidden {
-  display: none;
+#album-info img {
+  width: 100%;
 }
 
-.center {
-  text-align: center;
+.album-details {
+  background: rgba(0,0,0,.5);
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.track-data {
+  display: inline-block;
+  vertical-align: top;
+  height: 100%;
+  width: 40%;
 }
+
+/* Song component */
+#song-list {
+  background: rgba(0,0,0,.3);
+  width: 100%;
+  position: inherit;
+}
+
+.song {
+  margin: 2em;
+  background: rgba(0,0,0,.1);
+}
+
+.song:hover {
+  background: rgba(0,0,0,.5);
+}
+
+.is-playing {
+  background: rgba(0,0,0,.5);
+}
+
+.song-actions button {
+  background: none;
+  color: white;
+  padding: 1em;
+  border: none;
+  outline: none;
+}
+
+.song-actions {
+  min-width: 3em;
+}
+.song-title {
+  width: 100%;
+  text-align: left;
+  padding: 0 1em;
+}
+
+.song-duration {
+  min-width: 5em;
+}
+
+/* Player Bar */
+.player-bar {
+  width: 100%;
+    background: rgba(0,0,0,.8);
+    border-top: 1px solid #949494;
+    position: fixed;
+    bottom: 0;
+    padding: 1.5em 10%;
+    box-sizing: border-box;
+}
+
+
+.player-bar #buttons button {
+  width: 3em;
+  height: 3em;
+  background: none;
+  border-radius: 1.5em;
+  margin-right: 4px;
+  outline: none;
+  color: white;
+  border: none;
+}
+
+.player-bar #buttons button:focus,
+.player-bar #buttons button:hover {
+  background: rgba(255,255,255,.3);
+}
+
+.player-bar #buttons {
+  /* width: 10em; */
+  display: inline-flex;
+}
+
+.player-bar #buttons span {
+  font-size: 16px;
+}
+
+.player-bar #time-controls {
+  width: 60%;
+  display: inline-flex;
+  padding: 1em 0em;
+}
+.player-bar #time-controls .current-time {
+  width: 5em;
+}
+.player-bar #time-controls .seek-bar {
+  width: 100%;
+}
+.player-bar #time-controls .total-time {
+  width: 5em;
+}
+
+.player-bar #volume-controls {
+  width: 20%;
+  display: inline-flex;
+  padding: 1em 0em;
+}
+
+.player-bar #volume-controls .seek-bar {
+  width: 100%
+}
+
+.player-bar #volume-controls .icon {
+  font-size: 16px;
+  width: 20%;
+}
+
+
+@media screen and ( max-width: 900px ) {
+  .album {
+    padding-bottom: 12em;
+  }
+
+  #album-info {
+    width: 100%;
+    display: block;
+    padding: 0 4em;
+  }
+
+  .album-details {
+    padding: 1em;
+  }
+
+  .track-data {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 4em;
+  }
+
+  #song-list {
+    /* margin: 0 1em; */
+  }
+
+  .song {
+    margin: 1em;
+  }
+
+
+  .player-bar {
+    padding: 1em 5%;
+  }
+
+  .player-bar #buttons button {
+    margin: 0 3em;
+  }
+
+  .player-bar #time-controls {
+    width: 100%;
+  }
+
+  .player-bar #volume-controls {
+    width: 70%;
+  }
+
+}
+ @media screen and ( max-width: 600px ) {
+   #album-info {
+     width: 100%;
+     display: block;
+     padding: 0 1em;
+   }
+
+   .album-details {
+     padding: 1em;
+   }
+
+   .track-data {
+     width: 100%;
+     box-sizing: border-box;
+     padding: 0 1em;
+   }
+ }

@@ -14,9 +14,9 @@ class Song extends Component {
   render() {
 
     return(
-      <tr className="song" data-id={this.props.index}>
+      <tr className={ this.props.currentSong === this.props.song && this.props.isPlaying ? "song is-playing" : "song" } data-id={this.props.index} onClick={ () => this.props.handleSongClick()} >
         <td className="song-actions" >
-          <button onClick={ () => this.props.handleSongClick()} >
+          <button>
           {
             this.status()
           }
