@@ -214,4 +214,13 @@ html {
      box-sizing: border-box;
      padding: 0 1em;
    }
+
+   .player-bar #buttons {
+     width: 100%;
+   }
+   .player-bar #buttons button {
+     width: 33%;
+     margin: 0 1em;
+   }
+
  }
