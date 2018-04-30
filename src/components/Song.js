@@ -23,7 +23,7 @@ class Song extends Component {
           </button>
         </td>
         <td className="song-title">{this.props.song.title}</td>
-        <td className="song-duration">{this.props.song.duration}</td>
+        <td className="song-duration">{this.props.formatTime(this.props.song.duration)}</td>
       </tr>
     )
   }

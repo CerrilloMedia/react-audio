@@ -21,7 +21,7 @@ class Album extends Component {
 
     this.audioElement = document.createElement('audio');
     this.audioElement.src = album.songs[0].audioSrc;
-
+    this.audioElement.volume = .5;
 
     this.findSongIndex = (songs) => {
       return songs.findIndex(song => song === this.state.currentSong);
@@ -31,28 +31,29 @@ class Album extends Component {
     // for separate timer functionality such as changes in current time of track we need to mount the components
     componentDidMount() {
       this.eventListeners = {
-        timeupdate: e => { this.setState({ currentTime: this.audioElement.currentTime }) },
-        durationchange: e => { this.setState({ duration: this.audioElement.duration })}
+        timeupdate:     e => { this.setState({ currentTime: this.audioElement.currentTime }) },
+        durationchange: e => { this.setState({ duration: this.audioElement.duration })},
+        volumechange:   e => { this.setState({ volume: this.audioElement.volume })}
       };
 
       this.audioElement.addEventListener('timeupdate', this.eventListeners.timeupdate);
       this.audioElement.addEventListener('durationchange', this.eventListeners.duration);
+      this.audioElement.addEventListener('volumechange', this.eventListeners.volumechange);
     }
 
     componentWillUnmount() {
       this.audioElement.src = null;
       this.audioElement.removeEventListener('timeupdate', this.eventListeners.timeupdate);
       this.audioElement.removeEventListener('durationchange', this.eventListeners.durationchange);
+      this.audioElement.removeEventListener('volumechange', this.eventListeners.volumechange);
     };
 
 
     play(song) {
       this.audioElement.play();
       this.setState({
-        isPlaying: true,
-        track: this.findSongIndex(this.state.album.songs)
+        isPlaying: true
       });
-
     }
 
     pause() {
@@ -76,8 +77,8 @@ class Album extends Component {
           this.setSong(song);
         }
         this.play(song);
-        }
       }
+    }
 
     handlePrevClick() {
 
@@ -115,6 +116,32 @@ class Album extends Component {
       this.setState({ currentTime: newTime })
     }
 
+    // Handle volume slider
+    handleVolumeChange(e) {
+      const newVolume = e.target.value;
+      this.audioElement.volume = newVolume;
+      this.setState({volume: newVolume});
+    }
+
+    // Format time string
+    formatTime(timestring) {
+
+      if ( (timestring + "").match(/[a-z]/)) {
+        return "-:--";
+      }
+
+      const sec = Number(timestring);
+      const date = new Date(0,0,0,0,0,sec);
+
+      var timeArray = (date + "").match(/\d+:\d+:\d+/)[0].split(":");
+
+      timeArray[0] = timeArray[0] > 0 ? (timeArray[0]) : null;            // hour
+      timeArray[1] = timeArray[0] > 0 ? timeArray[1] : Number(timeArray[1])+""; // minutes
+
+      return timeArray.filter(Boolean).join(":");
+    }
+
+
   render() {
     return (
       <section className="album">
@@ -141,6 +168,7 @@ class Album extends Component {
                 isPlaying={this.state.isPlaying}
                 index={index}
                 handleSongClick={ () => this.handleSongClick(song) }
+                formatTime={this.formatTime}
                 key={index} />
               )
             }
@@ -151,11 +179,14 @@ class Album extends Component {
           currentSong={this.state.currentSong}
           duration={this.audioElement.duration}
           currentTime={this.audioElement.currentTime}
+          volume={this.state.volume}
 
+          formatTime={this.formatTime}
           handleSongClick={ () => this.handleSongClick(this.state.currentSong)}
           handlePrevClick={ () => this.handlePrevClick()}
           handleNextClick={ () => this.handleNextClick()}
           handleTimeChange={ (e) => this.handleTimeChange(e)}
+          handleVolumeChange={ (e) => this.handleVolumeChange(e)}
         />
       </section>
     );
