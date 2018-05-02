@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Icon from 'material-ui/Icon';
 
 class Song extends Component {
 
@@ -6,11 +7,10 @@ class Song extends Component {
     if (this.props.currentSong !== this.props.song ) {
       return <span className="song-number">{this.props.index+1}</span>
     } else {
-      return this.props.isPlaying ? <span className="ion-pause"></span> : <span className="ion-play"></span>
+      return this.props.isPlaying ? <Icon>pause</Icon> : <Icon>play_arrow</Icon>
     }
   }
-
-
+  
   render() {
 
     return(

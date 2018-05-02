@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import Icon from 'material-ui/Icon';
+import Button from 'material-ui/Button';
+
+const style = {
+  minWidth: 0
+};
 
 class PlayerBar extends Component {
 
@@ -6,15 +12,15 @@ class PlayerBar extends Component {
     return(
       <section className="player-bar">
         <section id="buttons">
-          <button id="previous" onClick={this.props.handlePrevClick}>
-            <span className="ion-skip-backward"></span>
-          </button>
-          <button id="play-pause" onClick={this.props.handleSongClick} >
-            <span className={ this.props.isPlaying ? 'ion-pause' : 'ion-play'}></span>
-          </button>
-          <button id="next" onClick={this.props.handleNextClick}>
-            <span className="ion-skip-forward"></span>
-          </button>
+          <Button style={style} id="previous" onClick={this.props.handlePrevClick}>
+            <Icon>skip_previous</Icon>
+          </Button>
+          <Button style={style} id="play-pause" onClick={this.props.handleSongClick} >
+            <Icon>{ this.props.isPlaying ? "pause" : "play_arrow"}</Icon>
+          </Button>
+          <Button style={style} id="next" onClick={this.props.handleNextClick}>
+            <Icon>skip_next</Icon>
+          </Button>
         </section>
         <section id="time-controls">
           <div className="current-time">{this.props.formatTime(this.props.currentTime)}</div>
@@ -30,7 +36,7 @@ class PlayerBar extends Component {
           <div className="total-time">{this.props.formatTime(this.props.duration || 0)}</div>
         </section>
         <section id="volume-controls">
-          <div className="icon ion-volume-low"></div>
+          <Icon>volume_mute</Icon>
           <input
             type="range"
             className="seek-bar"
@@ -40,7 +46,7 @@ class PlayerBar extends Component {
             value={this.props.volume || 0}
             onChange={this.props.handleVolumeChange}
           />
-          <div className="icon ion-volume-high"></div>
+          <Icon>volume_up</Icon>
         </section>
       </section>
     )

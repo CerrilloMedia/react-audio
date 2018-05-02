@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import albumData from './../data/albums';
 import Song from './Song';
 import PlayerBar from './PlayerBar';
+import Paper from 'material-ui/Paper';
+
+const style = {
+  background: 'none'
+};
 
 class Album extends Component {
   constructor(props) {
@@ -146,14 +151,17 @@ class Album extends Component {
     return (
       <section className="album">
         <section id="album-info">
+        <Paper style={style} elevation={6}>
           <img id="album-cover-art" src={this.state.album.albumCover} alt="test" />
           <div className="album-details">
             <h1 id="album-title">{this.state.album.title}</h1>
             <h2 className="artist">{this.state.album.artist}</h2>
             <div id="release-info">{this.state.album.releaseInfo}</div>
           </div>
+          </Paper>
         </section>
         <section className="track-data">
+          <Paper style={style} elevation={3}>
           <table id="song-list">
             <colgroup>
               <col id="song-number-column" />
@@ -175,6 +183,7 @@ class Album extends Component {
               }
             </tbody>
           </table>
+          </Paper>
         </section>
         <PlayerBar
           isPlaying={this.state.isPlaying}

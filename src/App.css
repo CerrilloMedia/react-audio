@@ -52,6 +52,7 @@ html {
 .song {
   margin: 2em;
   background: rgba(0,0,0,.1);
+  line-height: 3.5em;
 }
 
 .song:hover {
@@ -65,13 +66,18 @@ html {
 .song-actions button {
   background: none;
   color: white;
-  padding: 1em;
+  /* padding: 1em; */
   border: none;
   outline: none;
 }
 
+.song .song-actions button:focus {
+  color: #46add2;
+}
+
 .song-actions {
   min-width: 3em;
+  line-height: 0;
 }
 .song-title {
   width: 100%;
@@ -98,7 +104,7 @@ html {
 .player-bar #buttons button {
   width: 3em;
   height: 3em;
-  background: none;
+  background: linear-gradient(180deg, rgb(24, 62, 74) 30%, rgba(60, 149, 180, 0.42) 90%) !important;
   border-radius: 1.5em;
   margin-right: 4px;
   outline: none;
@@ -106,10 +112,10 @@ html {
   border: none;
 }
 
-.player-bar #buttons button:focus,
+/* .player-bar #buttons button:focus,
 .player-bar #buttons button:hover {
   background: rgba(255,255,255,.3);
-}
+} */
 
 .player-bar #buttons {
   /* width: 10em; */
@@ -173,7 +179,7 @@ html {
   }
 
   #song-list {
-    /* margin: 0 1em; */
+    margin: 0;
   }
 
   .song {
