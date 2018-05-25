@@ -3,9 +3,16 @@ import albumData from './../data/albums';
 import Song from './Song';
 import PlayerBar from './PlayerBar';
 import Paper from 'material-ui/Paper';
+import Card, { CardContent, CardMedia } from 'material-ui/Card';
+import Typography from 'material-ui/Typography';
 
 const style = {
-  background: 'none'
+  paper: {
+    background: 'none'
+  },
+  cardContent: {
+    color: 'white'
+  }
 };
 
 class Album extends Component {
@@ -32,9 +39,11 @@ class Album extends Component {
       return songs.findIndex(song => song === this.state.currentSong);
     }
 
-  }
+  };
+
     // for separate timer functionality such as changes in current time of track we need to mount the components
     componentDidMount() {
+      this.props.albumPage(this.props.match.path);
       this.eventListeners = {
         timeupdate:     e => { this.setState({ currentTime: this.audioElement.currentTime }) },
         durationchange: e => { this.setState({ duration: this.audioElement.duration })},
@@ -47,6 +56,7 @@ class Album extends Component {
     }
 
     componentWillUnmount() {
+      this.props.albumPage(null);
       this.audioElement.src = null;
       this.audioElement.removeEventListener('timeupdate', this.eventListeners.timeupdate);
       this.audioElement.removeEventListener('durationchange', this.eventListeners.durationchange);
@@ -144,24 +154,29 @@ class Album extends Component {
       timeArray[1] = timeArray[0] > 0 ? timeArray[1] : Number(timeArray[1])+""; // minutes
 
       return timeArray.filter(Boolean).join(":");
-    }
+    };
 
+    // this.props.albumPage(true);
 
   render() {
     return (
       <section className="album">
         <section id="album-info">
-        <Paper style={style} elevation={6}>
+        <Paper style={style.paper} elevation={6}>
           <img id="album-cover-art" src={this.state.album.albumCover} alt="test" />
-          <div className="album-details">
-            <h1 id="album-title">{this.state.album.title}</h1>
-            <h2 className="artist">{this.state.album.artist}</h2>
-            <div id="release-info">{this.state.album.releaseInfo}</div>
-          </div>
+          <CardContent style={style.cardContent} className="album-details">
+            <Typography variant="title" color='inherit'>{this.state.album.title}</Typography>
+            <Typography variant="subheading" color="inherit">
+              {this.state.album.artist}
+            </Typography>
+            <Typography variant="body1" color="inherit">
+              {this.state.album.releaseInfo}
+            </Typography>
+          </CardContent>
           </Paper>
         </section>
         <section className="track-data">
-          <Paper style={style} elevation={3}>
+          <Paper style={style.paper} elevation={3}>
           <table id="song-list">
             <colgroup>
               <col id="song-number-column" />

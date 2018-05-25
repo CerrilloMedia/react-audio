@@ -9,10 +9,79 @@ html {
   font-size: 14px;
 }
 
+body {
+  height: 100%;
+  min-height: 100%;
+}
+
+main  {
+  padding-top: 20px;
+}
+
 .App {
   text-align: center;
   color: white;
 }
+
+/* Footer */
+.footer-links li {
+  list-style: none;
+  line-height: 1.5em;
+}
+
+.footer-links li:first-child {
+  padding-top: 1em;
+}
+
+.footer-links li:hover {
+  cursor: pointer;
+  color: #e53d77;
+}
+
+.footer-list li {
+  list-style: none;
+  line-height: 1.5em;
+  color: #abdaeb;
+  /* icons */
+  fill: #abdaeb;
+}
+
+.footer-list li:first-child  {
+  font-size: 20px;
+  color: #e53d77;
+  line-height: 1.5em;
+}
+
+.social-links li svg {
+  font-size: 1em;
+}
+.social-label {
+  padding-left: .5em;
+}
+
+.footer-address {
+  text-align: center;
+}
+
+
+
+/* Library */
+
+.library {
+  /* width: 60%; */
+  margin: 0 10%;
+}
+
+.album-card {
+  width: 90%;
+  margin: 0 5% 5%;
+}
+
+.album .album-cover {
+
+}
+
+
 
 /* Album Page  */
 .album {
@@ -112,11 +181,6 @@ html {
   border: none;
 }
 
-/* .player-bar #buttons button:focus,
-.player-bar #buttons button:hover {
-  background: rgba(255,255,255,.3);
-} */
-
 .player-bar #buttons {
   /* width: 10em; */
   display: inline-flex;
@@ -156,8 +220,26 @@ html {
   width: 20%;
 }
 
+/* Landing */
+
+.point-description {
+  line-height: 1.5em;
+}
+
+.jumbotron-button {
+  background-color: #3787a3;
+}
+
 
 @media screen and ( max-width: 900px ) {
+  /* LIBRARY */
+  .library {
+    width: 80%;
+    margin: 0 10%;
+  }
+
+
+  /* ALBUM */
   .album {
     padding-bottom: 12em;
   }
@@ -205,6 +287,40 @@ html {
 
 }
  @media screen and ( max-width: 600px ) {
+   /* LIBRARY */
+   .library {
+     width: 100%;
+     margin: 0%;
+   }
+
+   /* Footer */
+   .social-links li {
+    width: 33%;
+    float: left;
+    text-align: center;
+   }
+
+   .footer-links li:first-child {
+     padding-top: 0;
+   }
+
+   .footer-links {
+     text-align: center;
+   }
+
+   .footer-list li {
+     text-align: center;
+   }
+
+   .social-links li svg {
+     font-size: 2em;
+   }
+
+   .social-label {
+     display: none;
+   }
+
+   /* ALBUM */
    #album-info {
      width: 100%;
      display: block;
